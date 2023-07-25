@@ -1,7 +1,7 @@
 export function getEnv() {
     return {
-        PROFILE_URL: process.env.PROFILE_URL || "https://cast.k3l.io",
-        CONTENT_URL: process.env.CONTENT_URL || "https://content.cast.k3l.io",
+        PROFILE_URL: "https://cast.k3l.io",
+        CONTENT_URL: "https://content.cast.k3l.io",
     }
 }
 
