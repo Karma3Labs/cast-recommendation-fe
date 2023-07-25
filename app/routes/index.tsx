@@ -7,7 +7,7 @@ import {
 } from '@remix-run/react'
 import { useEffect } from 'react'
 import {
-	globalRankByHandle,
+	globalRankByUsername,
 	globalRankings,
 	PER_PAGE,
 	rankingCounts,
@@ -30,17 +30,14 @@ export const loader = async ({ request }: LoaderArgs) => {
 		? Number(url.searchParams.get('page'))
 		: 1
 
-	let handle = url.searchParams.get('handle')
-	if (handle && handle !== '' && !handle.endsWith('.lens')) {
-		handle = `${handle}.lens`
-	}
+	let username = url.searchParams.get('username')
 
-	const handleRank = handle
-		? await globalRankByHandle(strategy, handle)
+	const usernameRank = username
+		? await globalRankByUsername(strategy, username)
 		: null
 
-	if (handleRank) {
-		page = Math.ceil(handleRank / PER_PAGE)
+	if (usernameRank) {
+		page = Math.ceil(usernameRank / PER_PAGE)
 	}
 
 	const [results, count] = await Promise.all([
@@ -49,15 +46,15 @@ export const loader = async ({ request }: LoaderArgs) => {
 	])
 
 	// Profile not found
-	if (handle && !handleRank) {
+	if (username && !usernameRank) {
 		return {
 			results: [],
 			page,
 			strategy,
 			count,
 
-			handle,
-			handleRank,
+			username,
+			usernameRank,
 		}
 	}
 
@@ -67,8 +64,8 @@ export const loader = async ({ request }: LoaderArgs) => {
 		strategy,
 		count,
 
-		handle,
-		handleRank,
+		username,
+		usernameRank,
 	}
 }
 
@@ -78,12 +75,12 @@ export default function Index() {
 	const [searchParams] = useSearchParams()
 
 	useEffect(() => {
-		if (data.handle) {
+		if (data.username) {
 			document
-				.querySelector(`[data-profile-handle="${data.handle}"]`)
+				.querySelector(`[data-profile-username="${data.username}"]`)
 				?.scrollIntoView(true)
 		}
-	}, [data.handle, data.strategy])
+	}, [data.username, data.strategy])
 
 	return (
 		<main>
@@ -117,7 +114,7 @@ export default function Index() {
 					</div>
 				</div>
 				<div className="title">
-					<h1>Lens Profile Rankings</h1>
+					<h1>Farcaster Profile Rankings</h1>
 					<h6>Powered by configurable open-sourced algorithms</h6>
 				</div>
 			</header>
@@ -158,10 +155,10 @@ export default function Index() {
 						<Form method="get">
 							<input 
 								type="text"
-								name="handle"
-								placeholder="Search by handle"
+								name="username"
+								placeholder="Search by username"
 								className='btn btn-search'
-								defaultValue={data.handle || ''}
+								defaultValue={data.username || ''}
 							/>
 							<input
 								type="hidden"
@@ -173,7 +170,7 @@ export default function Index() {
 								Search
 							</button>
 
-							{data.handle && (
+							{data.username && (
 								<button
 									className="btn"
 									type="button"
@@ -189,24 +186,22 @@ export default function Index() {
 				<div className="profiles-grid">
 					<div className='column-names'>
 						<strong>Rank</strong>
-						<strong>Profile Handle</strong>
-						<strong className="right-align">Followers</strong>
+						<strong>Username</strong>
 					</div>
 
 					{data.results.map((p) => (
 						<div
 							className={
-								p.handle === data.handle ? 'active-row' : ''
+								p.username === data.username ? 'active-row' : ''
 							}
 							key={p.id}
 						>
 							<span>{p.rank}</span>
-							<span data-profile-handle={p.handle}>
+							<span data-profile-username={p.username}>
 								<a href={
-									"https://lenster.xyz/u/" + encodeURI(p.handle)
-								} target="_blank">{p.handle}</a>
+									"https://www.discove.xyz/@" + encodeURI(p.username)
+								} target="_blank">{p.username}</a>
 							</span>
-							<span className="right-align">{p.followersCount}</span>
 						</div>
 					))}
 					{data.results.length === 0 && <div>No results</div>}

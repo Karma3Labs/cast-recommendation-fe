@@ -338,7 +338,7 @@ a.header-link {
     display: block;
     height: 1px;
     background-color: #d4e4e4;
-    grid-column: span 3;
+    grid-column: span 2;
 }
 
 .strategies {
@@ -368,7 +368,7 @@ header form {
 
 .profiles-grid {
 	display: grid;
-	grid-template-columns: 1.5fr 5fr 1.5fr;
+	grid-template-columns: 1.5fr 5fr;
 	padding: 20px 10%;
 }
 

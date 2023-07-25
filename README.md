@@ -1,4 +1,4 @@
-# Lens Profile Recommendation Front-end
+# Farcaster Recommendation Front-end
 
 - [Remix Docs](https://remix.run/docs)
 

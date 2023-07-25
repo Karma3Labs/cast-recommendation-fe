@@ -1,7 +1,7 @@
 export interface Profile {
 	id: string
 	rank: number
-	handle: string
+	username: string
 	followersCount: string
 }
 
@@ -11,17 +11,17 @@ export interface Strategy {
 }
 
 export const strategies = [
-	{ name: 'followship', description: 'This strategy emphasizes only on the relevant and meaningful follows as peer-to-peer attestations, disregarding mirrors and comments.'},
-	{ name: 'engagement', description: 'This strategy emphasizes on social engagements as attestations, combining follows, mirrors and comments.'},
-	{ name: 'influencer', description: 'Similar to the engagement strategy, but adds another datapoint where posts can be turned into NFT collections by influencers.'},
-	{ name: 'creator', description: 'Similar to the influencer strategy, we add another datapoint where NFT collections have a price associated in secondary markets.'},
+	{ name: 'followship', description: 'This strategy emphasizes only on the relevant and meaningful follows as peer-to-peer attestations, disregarding recasts and replies.'},
+	{ name: 'engagement', description: 'This strategy emphasizes on social engagements as attestations, combining follows, recasts, likes, replies and mentions.'},
+	{ name: 'influencer', description: 'Similar to the followship strategy, but increases the influence of a few OG profiles on the social graph.'},
+	{ name: 'creator', description: 'Similar to the engagement strategy, but increases the influence of a few OG profiles on the social graph.'},
 ] satisfies Strategy[]
 
-const API_URL = 'https://lens-api.k3l.io'
+const API_URL = 'https://api.cast.k3l.io'
 export const PER_PAGE = 100
 
 export async function globalRankings(sName: Strategy['name'], page: number) {
-	const url = new URL((process.env.API_URL || API_URL) + `/profile/scores`)
+	const url = new URL((process.env.API_URL || API_URL) + `/rankings`)
 	url.searchParams.set('strategy', sName)
 	url.searchParams.set('offset', String((Math.max(page - 1, 0)) * PER_PAGE))
 	url.searchParams.set('limit', String(PER_PAGE))
@@ -43,7 +43,7 @@ export async function globalRankings(sName: Strategy['name'], page: number) {
 }
 
 export async function rankingCounts(sName: Strategy['name']) {
-	const url = new URL((process.env.API_URL || API_URL) + `/profile/count`)
+	const url = new URL((process.env.API_URL || API_URL) + `/rankings_count`)
 	url.searchParams.set('strategy', sName)
 
 	const resp = await fetch(url.toString(), {
@@ -62,15 +62,12 @@ export async function rankingCounts(sName: Strategy['name']) {
 	return count
 }
 
-export async function globalRankByHandle(sName: Strategy['name'], handle: string) {
-	const url = new URL((process.env.API_URL || API_URL) + `/profile/rank`)
-	if (handle && !handle.endsWith('.lens')) {
-		handle = `${handle}.lens`
-	}
-		console.log('handle', handle)
+export async function globalRankByUsername(sName: Strategy['name'], username: string) {
+	const url = new URL((process.env.API_URL || API_URL) + `/ranking_index`)
+	console.log('username', username)
 
 	url.searchParams.set('strategy', sName)
-	url.searchParams.set('handle', handle)
+	url.searchParams.set('username', username)
 
 	const resp = await fetch(url.toString(), {
 		headers: {
@@ -80,7 +77,7 @@ export async function globalRankByHandle(sName: Strategy['name'], handle: string
 
 	if (resp.ok !== true) {
 		const text = await resp.text()
-		if(text === 'Handle does not exist') {
+		if(text === 'Username does not exist') {
 			return null
 		}
 
@@ -93,9 +90,9 @@ export async function globalRankByHandle(sName: Strategy['name'], handle: string
 	return rank
 }
 
-export async function personalisedRankings(handle: string, page: number) {
+export async function personalisedRankings(username: string, page: number) {
 	const url = new URL((process.env.API_URL || API_URL) + `/suggest`)
-	url.searchParams.set('handle', handle)
+	url.searchParams.set('username', username)
 	// url.searchParams.set('strategy', sName)
 	url.searchParams.set('offset', String((page -1) * PER_PAGE))
 	url.searchParams.set('limit', String(PER_PAGE))
@@ -108,7 +105,7 @@ export async function personalisedRankings(handle: string, page: number) {
 
 	if(resp.ok !== true) {
 		const text = await resp.text()
-		if(text === 'Handle does not exist') {
+		if(text === 'Username does not exist') {
 			return []
 		}
 

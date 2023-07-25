@@ -6,26 +6,26 @@ import HeaderLinks from '~/components/HeaderLinks'
 
 export const loader = async ({ request }: LoaderArgs) => {
 	const url = new URL(request.url)
-	const handle = url.searchParams.get('handle')
+	const username = url.searchParams.get('username')
 
 	const page = url.searchParams.get('page')
 		? Number(url.searchParams.get('page'))
 		: 1
 
-	if (!handle) {
+	if (!username) {
 		return {
 			results: [],
 			page,
-			handle: null,
+			username: null,
 		}
 	}
 
-	const results = await personalisedRankings(handle, page)
+	const results = await personalisedRankings(username, page)
 
 	return {
 		results,
 		page,
-		handle,
+		username,
 	}
 }
 
@@ -62,7 +62,7 @@ export default function Suggest() {
 					</div>
 				</div>
 				<div className="title">
-					<h1>Lens Personalized Recommendation</h1>
+					<h1>Farcaster Personalized Recommendation</h1>
 					<h6>Powered by configurable open-sourced algorithms</h6>
 				</div>
 			</header>
@@ -71,16 +71,16 @@ export default function Suggest() {
 				<Form method="get" className="search personalized-search">
 					<input
 						type="text"
-						name="handle"
+						name="username"
 						className="btn btn-search"
-						placeholder="Search by handle"
-						defaultValue={data.handle || ''}
+						placeholder="Search by username"
+						defaultValue={data.username || ''}
 					/>
 					{/* <button className="btn" type="submit">
 						Search
 					</button> */}
 {/* 
-					{data.handle && (
+					{data.username && (
 						<button
 							className="btn"
 							type="button"
@@ -94,17 +94,15 @@ export default function Suggest() {
 				<div className="profiles-grid">
 					<div>
 						<strong>Rank</strong>
-						<strong>Profile Handle</strong>
-						<strong>Followers</strong>
+						<strong>Profile Username</strong>
 					</div>
 					{data.results.map((p) => (
 						<div key={p.id}>
 							<span>{p.rank}</span>
-							<span>{p.handle}</span>
-							<span>{p.followersCount}</span>
+							<span>{p.username}</span>
 						</div>
 					))}
-					{data.handle && data.results.length === 0 && (
+					{data.username && data.results.length === 0 && (
 						<div>No results</div>
 					)}
 				</div>
