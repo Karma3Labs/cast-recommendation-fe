@@ -102,12 +102,12 @@ export default function Index() {
 					</div>
 					<div className="line"></div>
 					<div className='logo-container-2'>
-						<a href="https://www.lens.xyz/" target="_blank">
+						<a href="https://farcaster.xyz/" target="_blank">
 							<img
 								width="50px"
-								src="/lens.svg"
+								src="/farcaster.png"
 								draggable="false"
-								alt="Karma3Labs Logo"
+								alt="Farcaster Logo"
 							/>
 						</a>
 					</div>

@@ -16,13 +16,13 @@ export const meta: MetaFunction = () => ({
 	'og:title': 'Profile Rankings on Farcaster Protocol — by Karma3 Labs',
 	'og:type' : 'website',
 	'og:url'  : 'https://cast.k3l.io/',
-	'og:image': 'https://cast.k3l.io/karma3-lens-og.jpg',
+	'og:image': 'https://cast.k3l.io/farcaster.png',
     'og:description': 'Powered by configurable open-sourced algorithms',
 	// Twitter tags
 	'twitter:card': 'summary_large_image',
 	'twitter:title' : 'Profile Rankings on Farcaster Protocol — by Karma3 Labs',
 	'twitter:url'  : 'https://cast.k3l.io/',
-	'twitter:image': 'https://cast.k3l.io/karma3-lens-og.jpg',
+	'twitter:image': 'https://cast.k3l.io/farcaster.png',
     'twitter:description': 'Powered by configurable open-sourced algorithms',
 })
 
