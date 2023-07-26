@@ -2,15 +2,17 @@ FROM node:16
 
 WORKDIR /server
 
-COPY package.json package-lock.json ./
+COPY package.json ./
 
 # Bundle app source
 COPY . .
 
-RUN npm install
+ENV NODE_ENV=development
 
-RUN npm run build
+RUN npm clean-install
+
+RUN npx @remix-run/dev build
 
 EXPOSE 3000
 
-CMD [ "npx", "remix-serve", "api/"]
+CMD [ "npx", "@remix-run/serve", "api/"]
