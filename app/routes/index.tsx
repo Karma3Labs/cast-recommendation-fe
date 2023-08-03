@@ -16,7 +16,6 @@ import {
 } from '~/api'
 import LoadingIndicator from '~/components/LoadingIndicator'
 import Pagination from '~/components/Pagination'
-import HeaderLinks from '~/components/HeaderLinks'
 import { getEnv } from '~/env'
 
 const DEFAULT_STRATEGY = 'followship'
