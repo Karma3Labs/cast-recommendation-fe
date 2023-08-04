@@ -18,7 +18,7 @@ import LoadingIndicator from '~/components/LoadingIndicator'
 import Pagination from '~/components/Pagination'
 import { getEnv } from '~/env'
 
-const DEFAULT_STRATEGY = 'followship'
+const DEFAULT_STRATEGY = 'follows'
 
 global.ENV = getEnv()
 
