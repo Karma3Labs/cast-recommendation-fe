@@ -2,7 +2,12 @@ export interface Profile {
 	id: string
 	rank: number
 	username: string
-	followersCount: string
+	followers: number
+	following: number
+	likes: number
+	replies: number
+	recasts: number
+	mentions: number
 }
 
 export interface Strategy {
@@ -17,7 +22,7 @@ export const strategies = [
 	// { name: 'creator', description: 'Similar to the followship strategy, but increases the influence of a few OG profiles on the social graph.'},
 ] satisfies Strategy[]
 
-const API_URL = 'https://api.cast.k3l.io'
+const API_URL = 'http://localhost:8080'
 export const PER_PAGE = 100
 
 export async function globalRankings(sName: Strategy['name'], page: number) {

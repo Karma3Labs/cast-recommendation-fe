@@ -183,8 +183,14 @@ export default function Index() {
 
 				<div className="profiles-grid">
 					<div className='column-names'>
-						<strong>Rank</strong>
+						<strong className='center-align'>Rank</strong>
 						<strong>Username</strong>
+						<strong className='right-align'>Following</strong>
+						<strong className='right-align'>Followers</strong>
+						<strong className='right-align'>Likes</strong>
+						<strong className='right-align'>Replies</strong>
+						<strong className='right-align'>Recasts</strong>
+						<strong className='right-align'>Mentions</strong>
 					</div>
 
 					{data.results.map((p) => (
@@ -194,12 +200,18 @@ export default function Index() {
 							}
 							key={p.id}
 						>
-							<span>{p.rank}</span>
+							<span className='center-align'>{p.rank}</span>
 							<span data-profile-username={p.username}>
 								<a href={
-									"https://www.discove.xyz/@" + encodeURI(p.username)
+									"https://warpcast.com/" + encodeURI(p.username)
 								} target="_blank">{p.username}</a>
 							</span>
+							<span className='right-align'>{p.following}</span>
+							<span className='right-align'>{p.followers}</span>
+							<span className='right-align'>{p.likes}</span>
+							<span className='right-align'>{p.replies}</span>
+							<span className='right-align'>{p.recasts}</span>
+							<span className='right-align'>{p.mentions}</span>
 						</div>
 					))}
 					{data.results.length === 0 && <div>No results</div>}
