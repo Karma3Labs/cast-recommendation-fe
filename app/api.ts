@@ -22,7 +22,8 @@ export const strategies = [
 	// { name: 'creator', description: 'Similar to the followship strategy, but increases the influence of a few OG profiles on the social graph.'},
 ] satisfies Strategy[]
 
-const API_URL = 'http://localhost:8080'
+// const API_URL = 'http://localhost:8080'
+const API_URL = 'https://api.cast.k3l.io'
 export const PER_PAGE = 100
 
 export async function globalRankings(sName: Strategy['name'], page: number) {
