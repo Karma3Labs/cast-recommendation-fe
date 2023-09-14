@@ -123,7 +123,7 @@ export default function Index() {
 							const sp = new URLSearchParams(
 								searchParams.toString(),
 							)
-							sp.set('strategy', String(strategy.id))
+							sp.set('strategy', strategy.name)
 
 							const capitalizeFirst = (str: string) => 
 								str.charAt(0).toUpperCase() + str.slice(1);
