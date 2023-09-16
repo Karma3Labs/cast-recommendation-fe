@@ -18,13 +18,17 @@ export interface Strategy {
 
 export const strategies = [
 	{ name: 'follows', id: 1,
-		description: 'This strategy emphasizes only follows as relevant and meaningful peer-to-peer attestations, disregarding recasts and replies.'},
+		description: 'This strategy emphasizes only follows as relevant and meaningful peer-to-peer attestations, disregarding mentions, recasts, replies and likes.'},
 	{ name: 'engagement', id: 3,
-	 description: 'This strategy emphasizes social engagements as attestations, combining follows, recasts, likes, replies and mentions.'},
-	{ name: 'creator', id: 5, 
+	 description: 'This strategy emphasizes peer-to-peer likes, recasts, replies and mentions in increasing order of importance.'},
+	{ name: 'activity', id: 5, 
+	description: 'This strategy considers likes, recasts, replies and mentions to be all of equal importance.'},
+	{ name: 'OG circles', id: 7,
 	description: 'Similar to the follows strategy, but increases the influence of a few OG profiles on the social graph.'},
-	{ name: 'active OGs', id: 7,
+	{ name: 'OG engagement', id: 9,
 	description: 'Similar to the engagement strategy, but increases the influence of a few OG profiles on the social graph.'},
+	{ name: 'OG activity', id: 11,
+	description: 'Similar to the activity strategy, but increases the influence of a few OG profiles on the social graph.'},
 ] satisfies Strategy[]
 
 const API_URL = 'https://api.cast.k3l.io'
